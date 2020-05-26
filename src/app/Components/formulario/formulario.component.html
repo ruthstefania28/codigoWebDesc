@@ -1,0 +1,138 @@
+<form [formGroup]="datosUsuario" (ngSubmit)="prueba()">
+ 
+    <div class="row">
+        <div class="col-md-12">
+            <div class="formGroup">
+                <label class="">Nombres Completos</label>
+                <input type="text" class="form-control" formControlName="txtNombre"
+                [class.is-invalid]="datosUsuario.get('txtNombre').errors && datosUsuario.get('txtNombre').touched">
+            </div>
+            <div *ngIf="datosUsuario.get('txtNombre').errors && datosUsuario.get('txtNombre').touched">
+                    <p class="alerta-error" *ngIf="datosUsuario.get('txtNombre').hasError('required')">* El campo es requerido</p>
+                    <p class="alerta-error" *ngIf="datosUsuario.get('txtNombre').hasError('minlength')">Cantidad minima de caracteres
+                      (3)</p>
+                    <p class="alerta-error" *ngIf="datosUsuario.get('txtNombre').hasError('maxlength')">Cantidad maxima de caracteres
+                      (50)</p>
+                    <p class="alerta-error" *ngIf="datosUsuario.get('txtNombre').hasError('pattern')">Este campo solo acepta letras</p>
+                  </div>
+        </div>
+        <div class="col-md-12">
+            <div class="formGroup">
+                <label class="">Cédula</label>
+                <input type="text" class="form-control" formControlName="txtCedula"
+                [class.is-invalid]="datosUsuario.get('txtCedula').errors && datosUsuario.get('txtCedula').touched">
+            </div>
+            <div *ngIf="datosUsuario.get('txtCedula').errors && datosUsuario.get('txtCedula').touched">
+                    <p class="alerta-error" *ngIf="datosUsuario.get('txtCedula').hasError('required')">* El campo es requerido</p>
+                    <p class="alerta-error" *ngIf="datosUsuario.get('txtCedula').hasError('pattern')">Este campo solo acepta números,
+                      sin caracteres especiales ni puntos.</p>
+                  </div>
+        </div>
+        <div class="col-md-12">
+            <div class="formGroup">
+                <label>Correo Electrónico:</label>
+                <input type="email" class="form-control" formControlName="txtCorreo"
+                [class.is-invalid]="datosUsuario.get('txtCorreo').errors && datosUsuario.get('txtCorreo').touched">
+            </div>
+            <div *ngIf="datosUsuario.get('txtCorreo').errors && datosUsuario.get('txtCorreo').touched">
+                    <p class="alerta-error" *ngIf="datosUsuario.get('txtCorreo').hasError('required')">* El campo es requerido</p>
+                    <p class="alerta-error"
+                      *ngIf="datosUsuario.get('txtCorreo').hasError('pattern') || datosUsuario.get('txtCorreo').hasError('txtCorreo')">El email no es
+                      valido.</p>
+            </div>
+
+        </div>
+        <div class="col-md-12">
+            <div class="formGroup">
+                <label class="">Teléfono:</label>
+                <input type="number" class="form-control" formControlName="txtTelefono"
+                [class.is-invalid]="datosUsuario.get('txtTelefono').errors && datosUsuario.get('txtTelefono').touched">
+            </div>
+            <div *ngIf="datosUsuario.get('txtTelefono').errors && datosUsuario.get('txtTelefono').touched">
+                    <p class="alerta-error" *ngIf="datosUsuario.get('txtTelefono').hasError('required')">* El campo es requerido</p>
+                    <p class="alerta-error" *ngIf="datosUsuario.get('txtTelefono').hasError('minlength')">Cantidad minima de caracteres
+                      (7)</p>
+                    <p class="alerta-error" *ngIf="datosUsuario.get('txtTelefono').hasError('maxlength')">Cantidad maxima de caracteres
+                      (15)</p>
+                    <p class="alerta-error" *ngIf="datosUsuario.get('txtTelefono').hasError('pattern')">Este campo solo acepta números,
+                      sin caracteres especiales ni puntos.</p>
+                  </div>
+        </div>
+    </div>
+    <div class="row">
+
+        <div class="col-md-6">
+            <div class="formGroup">
+                <label class="">Departamento:</label>
+                <select class="form-control" formControlName="departamento" (change)="departSelec($event)">
+                    <option *ngFor="let d of departamentos" [value]="d.id_departamento">{{d.nombre}}
+                    </option>
+                </select>
+                <div class="invalid-feedback"
+                    *ngIf="datosUsuario.get('departamento').errors && datosUsuario.get('departamento').touched">
+                    <p
+                        *ngIf="datosUsuario.get('departamento').hasError('required') && datosUsuario.get('departamento').touched">
+                        *Este campo es requerido</p>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-6">
+            <div class="formGroup">
+                <label class="">Municipio:</label>
+                <select class="form-control" formControlName="municipio">
+                    <option *ngFor="let m of municipios" [value]="m.id_municipio">{{m.nombre}}
+                    </option>
+                </select>
+                <div class="invalid-feedback"
+                    *ngIf="datosUsuario.get('municipio').errors && datosUsuario.get('municipio').touched">
+                    <p
+                        *ngIf="datosUsuario.get('municipio').hasError('required') && datosUsuario.get('municipio').touched">
+                        *Este campo es requerido</p>
+                </div>
+            </div>
+
+
+
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-md-12">
+            <div class="formGroup">
+                <label class="">Asunto:</label>
+                <input type="text" class="form-control" formControlName="txtAsunto">
+            </div>
+        </div>
+        <div class="col-md-12">
+            <div class="formGroup">
+                <label class="">Mensaje:</label>
+                <textarea name="txtMensaje" rows="5" class="form-control"
+                    formControlName="txtMensaje"
+                    [class.is-invalid]="datosUsuario.get('txtMensaje').errors && datosUsuario.get('txtMensaje').touched"></textarea>
+            </div>
+            <div *ngIf="datosUsuario.get('txtMensaje').errors && datosUsuario.get('txtMensaje').touched">
+                    <p class="alerta-error" *ngIf="datosUsuario.get('txtMensaje').hasError('required')">* El campo es requerido</p>
+                    <p class="alerta-error" *ngIf="datosUsuario.get('txtMensaje').hasError('minlength')">Cantidad minima de caracteres
+                      (5)</p>
+                  </div>
+        </div>
+        <div class="col-md-12">
+<br>
+            <div class="alert alert-success alert-dismissible fade show" role="alert" *ngIf="status === 'success'">
+                {{statusText}}
+                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                  <span aria-hidden="true">&times;</span>
+                </button>
+              </div>
+              <div class="alert alert-danger alert-dismissible fade show" role="alert" *ngIf="status === 'error'">
+                {{statusText}}
+                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                  <span aria-hidden="true">&times;</span>
+                </button>
+              </div>
+
+              <br>
+            <button type="submit" style="margin-top:20px" data-toggle="modal" data-target="#exampleModal" [disabled]="!this.datosUsuario.valid" class="btn btn-primary btn-lg btn-block">Enviar</button>
+        </div>
+    </div>
+</form>
